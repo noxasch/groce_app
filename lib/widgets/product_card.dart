@@ -1,6 +1,7 @@
 import 'package:tfw_grocery_app/common.dart';
 import 'package:tfw_grocery_app/constants.dart';
 import 'package:tfw_grocery_app/models/product.dart';
+import 'package:tfw_grocery_app/widgets/favorite_button.dart';
 import 'package:tfw_grocery_app/widgets/product_price.dart';
 
 class ProductCard extends StatelessWidget {
@@ -47,6 +48,7 @@ class ProductCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ProductPrice(amount: product.priceString),
+                  const FavoriteButton()
                 ],
               )
             ],

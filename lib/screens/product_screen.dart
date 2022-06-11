@@ -1,9 +1,7 @@
 import 'package:tfw_grocery_app/common.dart';
 import 'package:tfw_grocery_app/constants.dart';
 import 'package:tfw_grocery_app/models/product.dart';
-import 'package:tfw_grocery_app/widgets/cart_counter.dart';
-import 'package:tfw_grocery_app/widgets/favorite_button.dart';
-import 'package:tfw_grocery_app/widgets/product_price.dart';
+import 'package:tfw_grocery_app/widgets/widgets.dart';
 
 class ProductScreen extends StatelessWidget {
   final Product product;
@@ -29,7 +27,10 @@ class ProductScreen extends StatelessWidget {
                 Container(
                   width: double.infinity,
                   color: const Color(0xFFF8F8F8),
-                  child: Image.asset(product.imagePath),
+                  child: Hero(
+                    tag: product.title,
+                    child: Image.asset(product.imagePath)
+                  ),
                 ),
                 const Positioned(
                   bottom: -20.0,

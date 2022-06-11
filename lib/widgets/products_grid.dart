@@ -1,6 +1,7 @@
 import 'package:tfw_grocery_app/common.dart';
 import 'package:tfw_grocery_app/constants.dart';
 import 'package:tfw_grocery_app/models/product.dart';
+import 'package:tfw_grocery_app/screens/product_screen.dart';
 import 'package:tfw_grocery_app/widgets/product_card.dart';
 
 class ProductsGrid extends StatelessWidget {
@@ -9,7 +10,7 @@ class ProductsGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+      padding: const EdgeInsets.all(defaultPadding),
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
@@ -27,9 +28,27 @@ class ProductsGrid extends StatelessWidget {
         ),
         itemCount: dummyProducts.length,
         itemBuilder: (BuildContext context, int index) {
+          Product product = dummyProducts[index];
           return ProductCard(
-            product: dummyProducts[index],
-            onPress: () {}
+            product: product,
+            onPress: () {
+              Navigator.push(
+                context,
+                // MaterialPageRoute(
+                //   builder: (context) => ProductScreen(product: product),
+                // )
+                PageRouteBuilder(
+                  transitionDuration: const Duration(milliseconds: 500),
+                  reverseTransitionDuration: const Duration(milliseconds: 500),
+                  pageBuilder: (context, animation, secondaryAnimation) {
+                    return FadeTransition(
+                      opacity: animation,
+                      child: ProductScreen(product: product)
+                    );
+                  },
+                ),
+              );
+            }
           );
         }
       ),
