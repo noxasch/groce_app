@@ -1,7 +1,11 @@
 {
   "@@locale": "en",
-  "helloWorld": "Hello World!",
-  "@helloWorld": {
-      "description": "The greeting shown to the Flutter Engage attendees"
-  }
+  "goodMorning": "Good Morning!",
+  "@goodMorning": {
+    "description": "Header app greetings in the morning"
+  },
+  "fruits": "Fruits",
+  "@fruits": {},
+  "addToCart": "Add To Cart",
+  "@addToCart": {}
 }
