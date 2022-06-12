@@ -2,10 +2,10 @@ import 'package:tfw_grocery_app/common.dart';
 import 'package:tfw_grocery_app/constants.dart';
 import 'package:tfw_grocery_app/widgets/rounded_icon_button.dart';
 
-class CartCounter extends StatelessWidget {
+class ItemCounter extends StatelessWidget {
   final int count = 1;
 
-  const CartCounter({Key? key}) : super(key: key);
+  const ItemCounter({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -7,5 +7,7 @@
   "fruits": "Fruits",
   "@fruits": {},
   "addToCart": "Add To Cart",
-  "@addToCart": {}
+  "@addToCart": {},
+  "cart": "Cart",
+  "@cart": {}
 }

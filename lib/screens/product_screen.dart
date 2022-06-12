@@ -1,15 +1,34 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tfw_grocery_app/common.dart';
 import 'package:tfw_grocery_app/constants.dart';
 import 'package:tfw_grocery_app/models/product.dart';
+import 'package:tfw_grocery_app/models/product_item.dart';
+import 'package:tfw_grocery_app/states/cart_states.dart';
 import 'package:tfw_grocery_app/widgets/widgets.dart';
 
-class ProductScreen extends StatelessWidget {
+class ProductScreen extends StatefulWidget {
   final Product product;
 
   const ProductScreen({
     Key? key,
     required this.product,
   }) : super(key: key);
+
+  @override
+  State<ProductScreen> createState() => _ProductScreenState();
+}
+
+class _ProductScreenState extends State<ProductScreen> {
+  String _cartTag = '';
+
+  void _onAddToCart(BuildContext context) {
+    // if added to cart, link hero animation to cart instead
+    setState(() {
+      _cartTag = '_cartTag';
+    });
+    // return to list
+    Navigator.pop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +47,13 @@ class ProductScreen extends StatelessWidget {
                   width: double.infinity,
                   color: const Color(0xFFF8F8F8),
                   child: Hero(
-                    tag: product.title,
-                    child: Image.asset(product.imagePath)
+                    tag: widget.product.title + _cartTag,
+                    child: Image.asset(widget.product.imagePath)
                   ),
                 ),
                 const Positioned(
                   bottom: -20.0,
-                  child: CartCounter(),
+                  child: ItemCounter(),
                 ),
               ],
             ),
@@ -46,17 +65,17 @@ class ProductScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    product.title
+                    widget.product.title
                   ),
                 ),
-                ProductPrice(amount: product.priceString)
+                ProductPrice(amount: widget.product.priceString)
               ],
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(defaultPadding),
             child: Text(
-              product.description,
+              widget.product.description,
               style: const TextStyle(
                 color: Color(0xFFBDBDBD),
                 height: 1.8,
@@ -65,22 +84,31 @@ class ProductScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: defaultPadding,
-          vertical: defaultPadding * 2),
-        child: MaterialButton(
-          color: primaryColor,
-          padding: const EdgeInsets.all(defaultPadding),
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(40))
-          ),
-          onPressed: () {},
-          child: Text(
-            AppLocalizations.of(context)!.addToCart,
-            style: const TextStyle(
-              color: Colors.white
-            ),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: defaultPadding,),
+          child: Consumer(
+            builder: (context, ref, child) {
+              return MaterialButton(
+                color: primaryColor,
+                padding: const EdgeInsets.all(defaultPadding),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(40))
+                ),
+                onPressed: () {
+                  ref.read(cartStateProvider.notifier)
+                    .addProduct(ProductItem(product: widget.product));
+
+                  _onAddToCart(context);
+                },
+                child: Text(
+                  AppLocalizations.of(context)!.addToCart,
+                  style: const TextStyle(
+                    color: Colors.white
+                  ),
+                ),
+              );
+            },
           ),
         ),
       ),

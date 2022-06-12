@@ -1,6 +1,7 @@
 import 'package:tfw_grocery_app/common.dart';
 import 'package:tfw_grocery_app/constants.dart';
 import 'package:tfw_grocery_app/controllers/home_state_controller.dart';
+import 'package:tfw_grocery_app/widgets/cart_summary.dart';
 import 'package:tfw_grocery_app/widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -58,8 +59,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             // print(details.primaryDelta);
                           },
                           child: Container(
+                            padding: const EdgeInsets.all(defaultPadding),
                             height: cartBarHeight,
                             color: const Color(0xFFEAEAEA),
+                            alignment: Alignment.topLeft,
+                            child: AnimatedSwitcher(
+                              duration: panelTransition,
+                              child: isNormal() ? const CartSummary() : const CartDetails(),
+                            ),
                           ),
                         ),
                       ),
